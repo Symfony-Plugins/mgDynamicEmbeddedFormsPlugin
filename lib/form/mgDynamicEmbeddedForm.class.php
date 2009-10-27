@@ -99,7 +99,8 @@ class mgDynamicEmbeddedForm extends sfFormPropel {
         call_user_func(array($object, 'set'.$this->model),$this->object);
         $form = new $embedded_form_name($object);
         $div_id=sfInflector::underscore($key)."_div";
-        $form->widgetSchema['delete']=new mgWidgetFormDeleteButton(array('label'=> $this->delete_button_name , 'function'=> "$('".$div_id."').hide();$('".$div_id."_delete').value= true;"));
+        $delete_name=sfInflector::underscore($this->format_name) .'_'.$this->name.'_'. sfInflector::underscore($key);
+        $form->widgetSchema['delete']=new mgWidgetFormDeleteButton(array('label'=> $this->delete_button_name , 'function'=> "$('".$div_id."').hide();$('".$delete_name."_delete').value= true;"));
         $form->validatorSchema['delete']=new sfValidatorPass();
         $this->embedForm($key, $form, "<div id='".$key."_div'>".$form->getWidgetSchema()->getFormFormatter()->getDecoratorFormat()."</div>");
         //$delete_link = new mgWidgetFormDeleteLink(array('label'=> $this->delete_button_name , 'function'=> "$('".$div_id."').hide();$('".$div_id."_delete').value= true;"));
